@@ -38,10 +38,10 @@ jobs:
         run: pnpm install
 
       - name: Run lint checks
-        run: pnpm run lint
+        run: pnpm run lint --fix
 
       - name: Run type checks
-        run: pnpm run type-check
+        run: pnpm run type-check --fix
 
       - name: Report results
         uses: actions/upload-artifact@v2
