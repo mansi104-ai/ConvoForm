@@ -38,10 +38,10 @@ jobs:
         run: pnpm install
 
       - name: Run lint checks
-        run: pnpm run lint --fix
+        run: dotenv -e .env.local -- turbo lint -- --fix
 
       - name: Run type checks
-        run: pnpm run type-check --fix
+        run: pnpm run type-check
 
       - name: Report results
         uses: actions/upload-artifact@v2
