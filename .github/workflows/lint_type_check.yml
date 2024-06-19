@@ -16,9 +16,6 @@ on:
         description: "Test scenario tags"
         required: false
         type: boolean
-      # environment:
-      #   description: "Environment to run tests against"
-      #   type: environment
 
   pull_request:
     branches:
@@ -28,24 +25,23 @@ on:
 jobs:
   check-lint-and-type-errors:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.14.3
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Run lint checks
-        run: npx eslint.
+        run: pnpm run lint
 
       - name: Run type checks
-        run: npx tsc --noEmit
+        run: pnpm run type-check
 
       - name: Report results
         uses: actions/upload-artifact@v2
@@ -57,7 +53,6 @@ jobs:
         run: |
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
-
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
